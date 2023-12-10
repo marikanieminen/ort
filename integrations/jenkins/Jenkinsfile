@@ -130,6 +130,12 @@ pipeline {
          * ORT analyzer tool parameters.
          */
 
+        string(
+            name: 'ANALYZER_INPUT_PATH',
+            description: 'The path to analyze, relative to the repository root. This may also point to a definiton file if only a single package manager is enabled.',
+            defaultValue: ''
+        )
+
         booleanParam(
             name: 'ALLOW_DYNAMIC_VERSIONS',
             description: 'Allow dynamic versions of dependencies (support projects without lock files).',
@@ -483,7 +489,7 @@ pipeline {
                     /opt/ort/bin/set_gradle_proxy.sh
 
                     rm -fr out/results
-                    /opt/ort/bin/ort $ORT_OPTIONS analyze -i "$PROJECT_DIR/source" -o out/results/analyzer
+                    /opt/ort/bin/ort $ORT_OPTIONS analyze -i "$PROJECT_DIR/source/$ANALYZER_INPUT_PATH" -o out/results/analyzer
                     '''.stripIndent().trim()
 
                     if (status >= ORT_FAILURE_STATUS_CODE) unstable('Analyzer issues found.')
