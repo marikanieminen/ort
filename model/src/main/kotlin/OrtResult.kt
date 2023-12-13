@@ -382,6 +382,13 @@ data class OrtResult(
     fun getRepositoryConfigResolutions(): Resolutions = repository.config.resolutions.orEmpty()
 
     /**
+     * Return the [Resolutions] contained in this [OrtResult].
+     */
+    @JsonIgnore
+    fun getResolutions(): Resolutions =
+        getRepositoryConfigResolutions().merge(resolvedConfiguration.resolutions.orEmpty())
+
+    /**
      * Return all [RuleViolation]s contained in this [OrtResult]. Optionally exclude resolved violations with
      * [omitResolved] and remove violations below the [minSeverity].
      */
