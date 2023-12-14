@@ -31,6 +31,7 @@ import org.ossreviewtoolkit.model.config.Excludes
 import org.ossreviewtoolkit.model.config.IssueResolution
 import org.ossreviewtoolkit.model.config.LicenseFindingCuration
 import org.ossreviewtoolkit.model.config.PackageConfiguration
+import org.ossreviewtoolkit.model.config.PathExclude
 import org.ossreviewtoolkit.model.config.RepositoryConfiguration
 import org.ossreviewtoolkit.model.config.Resolutions
 import org.ossreviewtoolkit.model.config.RuleViolationResolution
@@ -151,6 +152,16 @@ data class OrtResult(
         resolvedConfiguration.packageConfigurations.orEmpty().groupBy { it.id }
     }
 
+    private val pathExcludesById: Map<Identifier, List<PathExclude>> by lazy {
+        getProjectsAndPackages().associateWith { id ->
+            if (isProject(id)) {
+                repository.config.excludes.paths
+            } else {
+                packageConfigurationsById[id].orEmpty().flatMap { it.pathExcludes }
+            }
+        }
+    }
+
     /**
      * A map of projects and their excluded state. Calculating this map once brings massive performance improvements
      * when querying projects in large analyzer results.
@@ -247,7 +258,7 @@ data class OrtResult(
     @JsonIgnore
     fun getIssues(): Map<Identifier, Set<Issue>> {
         val analyzerIssues = analyzer?.result?.getAllIssues().orEmpty()
-        val scannerIssues = scanner?.getIssues().orEmpty()
+        val scannerIssues = scanner?.getIssues(pathExcludesById).orEmpty()
         val advisorIssues = advisor?.results?.getIssues().orEmpty()
 
         val analyzerAndScannerIssues = analyzerIssues.zipWithCollections(scannerIssues)

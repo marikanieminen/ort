@@ -29,6 +29,7 @@ import kotlin.time.measureTimedValue
 
 import org.apache.logging.log4j.kotlin.logger
 
+import org.ossreviewtoolkit.model.config.PathExclude
 import org.ossreviewtoolkit.model.config.ScannerConfiguration
 import org.ossreviewtoolkit.model.utils.FileListSortedSetConverter
 import org.ossreviewtoolkit.model.utils.ProvenanceResolutionResultSortedSetConverter
@@ -255,9 +256,11 @@ data class ScannerRun(
     fun getFileList(id: Identifier): FileList? = fileListById[id]
 
     @JsonIgnore
-    fun getIssues(): Map<Identifier, Set<Issue>> =
-        scanResultsById.mapValues { (_, scanResults) ->
-            scanResults.flatMapTo(mutableSetOf()) { it.summary.issues }
+    fun getIssues(pathExcludesById: Map<Identifier, List<PathExclude>> = emptyMap()): Map<Identifier, Set<Issue>> =
+        scanResultsById.mapValues { (id, scanResults) ->
+            scanResults.flatMapTo(mutableSetOf()) { it.summary.issues }.filterTo(mutableSetOf()) { issue ->
+                issue.affectedPath == null || pathExcludesById[id].orEmpty().none { it.matches(issue.affectedPath) }
+            }
         }
 }
 
