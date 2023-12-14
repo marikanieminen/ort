@@ -258,7 +258,6 @@ class ReporterCommand : OrtCommand(
         val input = ReporterInput(
             ortResult,
             ortConfig,
-            SimplePackageConfigurationProvider(ortResult.resolvedConfiguration.packageConfigurations.orEmpty()),
             DefaultLicenseTextProvider(licenseTextDirectories),
             copyrightGarbage,
             licenseInfoResolver,
