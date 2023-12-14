@@ -218,7 +218,7 @@ internal class EvaluatedModelMapper(private val input: ReporterInput) {
         if (input.ortResult.isProject(id)) {
             input.ortResult.repository.config.curations.licenseFindings
         } else {
-            input.packageConfigurationProvider.getPackageConfigurations(id, provenance)
+            input.ortResult.getPackageConfigurations(id, provenance)
                 .flatMap { it.licenseFindingCurations }
         }
 
@@ -226,7 +226,7 @@ internal class EvaluatedModelMapper(private val input: ReporterInput) {
         if (input.ortResult.isProject(id)) {
             input.ortResult.getExcludes().paths
         } else {
-            input.packageConfigurationProvider.getPackageConfigurations(id, provenance)
+            input.ortResult.getPackageConfigurations(id, provenance)
                 .flatMap { it.pathExcludes }
         }
 
