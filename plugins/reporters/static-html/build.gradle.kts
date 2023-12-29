@@ -32,7 +32,7 @@ dependencies {
     implementation(project(":utils:spdx-utils"))
 
     implementation(libs.flexmark)
-    implementation(libs.kotlinxHtml)
+    implementation(libs.kotlinx.html)
 
     // This is required to not depend on the version of Apache Xalan bundled with the JDK. Otherwise, the formatting of
     // the HTML generated in StaticHtmlReporter is slightly different with different Java versions.

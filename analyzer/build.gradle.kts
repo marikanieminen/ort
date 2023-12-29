@@ -31,7 +31,7 @@ dependencies {
     implementation(project(":downloader"))
     implementation(project(":utils:ort-utils"))
 
-    implementation(libs.kotlinxCoroutines)
+    implementation(libs.kotlinx.coroutines)
 
     funTestImplementation(platform(project(":plugins:package-managers")))
 
@@ -40,6 +40,6 @@ dependencies {
 
     testFixturesImplementation(project(":utils:test-utils"))
 
-    testFixturesImplementation(libs.kotestAssertionsCore)
-    testFixturesImplementation(libs.kotestRunnerJunit5)
+    testFixturesImplementation(libs.kotest.assertions.core)
+    testFixturesImplementation(libs.kotest.runner.junit5)
 }

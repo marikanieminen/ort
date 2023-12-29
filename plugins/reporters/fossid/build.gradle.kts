@@ -32,7 +32,7 @@ dependencies {
     implementation(project(":utils:common-utils"))
     implementation(project(":utils:ort-utils"))
 
-    implementation(libs.kotlinxCoroutines)
+    implementation(libs.kotlinx.coroutines)
 
     testImplementation(libs.mockk)
 }

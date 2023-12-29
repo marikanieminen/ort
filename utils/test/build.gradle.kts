@@ -26,18 +26,18 @@ dependencies {
     api(project(":model"))
     api(project(":plugins:version-control-systems:git-version-control-system"))
 
-    api(libs.kotestAssertionsCore)
-    api(libs.kotestFrameworkApi)
+    api(libs.kotest.assertions.core)
+    api(libs.kotest.framework.api)
 
     implementation(project(":downloader"))
     implementation(project(":utils:ort-utils"))
 
     implementation(libs.diffUtils)
-    implementation(libs.jacksonModuleKotlin)
-    implementation(libs.kotestExtensionsJunitXml)
-    implementation(libs.kotestFrameworkEngine)
+    implementation(libs.jackson.module.kotlin)
+    implementation(libs.kotest.extensions.junitXml)
+    implementation(libs.kotest.framework.engine)
     implementation(libs.postgresEmbedded)
 
-    runtimeOnly(libs.log4jApiToSlf4j)
+    runtimeOnly(libs.log4jApi.toSlf4j)
     runtimeOnly(libs.logbackClassic)
 }

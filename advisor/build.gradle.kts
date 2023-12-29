@@ -28,7 +28,7 @@ dependencies {
 
     implementation(project(":utils:ort-utils"))
 
-    implementation(libs.kotlinxCoroutines)
+    implementation(libs.kotlinx.coroutines)
 
     testImplementation(libs.mockk)
 }

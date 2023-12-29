@@ -30,8 +30,8 @@ dependencies {
     implementation(project(":utils:common-utils"))
     implementation(project(":utils:ort-utils"))
 
-    implementation(libs.kotlinxCoroutines)
-    implementation(libs.ktorClientOkHttp)
+    implementation(libs.kotlinx.coroutines)
+    implementation(libs.ktor.client.okHttp)
 
     testImplementation(libs.mockk)
 }

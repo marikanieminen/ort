@@ -37,8 +37,8 @@ dependencies {
     implementation(project(":utils:ort-utils"))
     implementation(project(":utils:spdx-utils"))
 
-    implementation(libs.jacksonDatabind)
-    implementation(libs.jacksonDataformatYaml)
+    implementation(libs.jackson.databind)
+    implementation(libs.jackson.dataformat.yaml)
 
     funTestImplementation(project(":plugins:package-managers:gradle-package-manager"))
 

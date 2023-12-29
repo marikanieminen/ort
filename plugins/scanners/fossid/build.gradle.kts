@@ -32,7 +32,7 @@ dependencies {
     implementation(project(":utils:ort-utils"))
     implementation(project(":utils:spdx-utils"))
 
-    implementation(libs.kotlinxCoroutines)
+    implementation(libs.kotlinx.coroutines)
 
     testImplementation(libs.mockk)
     testImplementation(libs.wiremock)

@@ -37,6 +37,6 @@ dependencies {
     // Only the Java plugin's built-in "test" source set automatically depends on the test fixtures.
     funTestImplementation(testFixtures(project))
 
-    funTestImplementation(libs.kotestAssertionsJson)
+    funTestImplementation(libs.kotest.assertions.json)
     testFixturesImplementation(project(":utils:test-utils"))
 }

@@ -32,7 +32,7 @@ dependencies {
     implementation(project(":utils:common-utils"))
     implementation(project(":utils:spdx-utils"))
 
-    implementation(libs.kotlinxCoroutines)
+    implementation(libs.kotlinx.coroutines)
     implementation(libs.scanoss)
 
     funTestApi(testFixtures(project(":scanner")))

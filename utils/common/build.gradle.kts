@@ -24,7 +24,7 @@ plugins {
 
 dependencies {
     api(libs.commonsCompress)
-    api(libs.jacksonDatabind)
+    api(libs.jackson.databind)
     api(libs.semver4j)
 
     implementation(libs.diskLruCache)
