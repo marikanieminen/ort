@@ -446,6 +446,26 @@ class SpdxExpressionTest : WordSpec({
         "not contain duplicate valid choice different left and right expressions" {
             "a AND a AND b".toSpdx().validChoices() should containExactly("a AND b".toSpdx())
         }
+
+        "work for nested AND expressions" {
+            val license = "(MIT OR GPL-2.0-only) AND (MIT OR BSD-3-Clause OR GPL-1.0-or-later) AND " +
+                "(MIT OR BSD-3-Clause OR GPL-2.0-only)"
+
+            val choices = license.toSpdx().validChoices().map { it.toString() }
+
+            choices should containExactlyInAnyOrder(
+                "MIT AND MIT AND MIT",
+                "MIT AND MIT AND BSD-3-Clause",
+                "MIT AND MIT AND GPL-2.0-only",
+                "MIT AND BSD-3-Clause AND GPL-2.0-only",
+                "MIT AND GPL-1.0-or-later AND MIT",
+                "MIT AND GPL-1.0-or-later AND BSD-3-Clause",
+                "MIT AND GPL-1.0-or-later AND GPL-2.0-only",
+                "GPL-2.0-only AND BSD-3-Clause AND BSD-3-Clause",
+                "GPL-2.0-only AND GPL-1.0-or-later AND BSD-3-Clause",
+                "GPL-2.0-only AND GPL-1.0-or-later AND GPL-2.0-only"
+            )
+        }
     }
 
     "offersChoice()" should {
