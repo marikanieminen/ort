@@ -379,30 +379,6 @@ class SpdxExpressionTest : WordSpec({
         }
     }
 
-    "disjunctiveNormalForm()" should {
-        "not change an expression already in DNF" {
-            "a AND b OR c AND d".toSpdx().disjunctiveNormalForm() should beString("(a AND b) OR (c AND d)")
-        }
-
-        "correctly convert an OR on the left side of an AND expression" {
-            "(a OR b) AND c".toSpdx().disjunctiveNormalForm() should beString("(a AND c) OR (b AND c)")
-        }
-
-        "correctly convert an OR on the right side of an AND expression" {
-            "a AND (b OR c)".toSpdx().disjunctiveNormalForm() should beString("(a AND b) OR (a AND c)")
-        }
-
-        "correctly convert ORs on both sides of an AND expression" {
-            "(a OR b) AND (c OR d)".toSpdx().disjunctiveNormalForm() should
-                beString("(a AND c) OR (a AND d) OR (b AND c) OR (b AND d)")
-        }
-
-        "correctly convert a complex expression" {
-            "(a OR b) AND c AND (d OR e)".toSpdx().disjunctiveNormalForm() should
-                beString("(a AND c AND d) OR (a AND c AND e) OR (b AND c AND d) OR (b AND c AND e)")
-        }
-    }
-
     "sort()" should {
         "not change already sorted expressions" {
             "a AND b".toSpdx().sorted() should beString("a AND b")
@@ -566,7 +542,7 @@ class SpdxExpressionTest : WordSpec({
             shouldThrow<InvalidLicenseChoiceException> { expression.applyChoice(choice) }
         }
 
-        "apply the choice if the expression is not in DNF" {
+        "apply the choice even if not literally contained in the expression" {
             val expression = "(a OR b) AND c".toSpdx()
             val choice = "a AND c".toSpdx()
 
@@ -575,7 +551,7 @@ class SpdxExpressionTest : WordSpec({
             result shouldBe "a AND c".toSpdx()
         }
 
-        "return the reduced subExpression in DNF if the choice was valid" {
+        "return the reduced subExpression if the choice was valid" {
             val expression = "(a OR b) AND c AND (d OR e)".toSpdx()
             val choice = "a AND c AND d".toSpdx()
             val subExpression = "a AND c AND d OR a AND c AND e".toSpdx()
@@ -601,7 +577,7 @@ class SpdxExpressionTest : WordSpec({
             shouldThrow<InvalidSubExpressionException> { expression.applyChoice(choice, subExpression) }
         }
 
-        "throw an exception if the subExpression does not match and needs to be converted to a DNF" {
+        "throw an exception if the subExpression does not match" {
             val expression = "(a OR b) AND c AND (d OR e)".toSpdx()
             val choice = "a AND c AND d".toSpdx()
             val subExpression = "(a AND c AND d) OR (x AND y AND z)".toSpdx()
